@@ -1,10 +1,18 @@
+
+
+
+
+
+
+
+
 from PyQt5 import QtCore,QtGui,QtWidgets
 '''usr code'''
 import RPi.GPIO as GPIO
 from gpiozero import LED
 
 GPIO.setmode(GPIO.BCM)
-led = LED(23) #for the led toggling proj
+led = LED(22) #for the led toggling proj
 
 led_pin = 24 #for LED DImmer
 GPIO.setup(led_pin,GPIO.OUT)
@@ -17,8 +25,10 @@ def ledToggle():
     else:
         led.on()
 '''usr code'''
+
 class Ui_MainWindow(object):
     def setupUi(self,MainWindow):
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(615,310)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName('centralwidget')
@@ -32,7 +42,6 @@ class Ui_MainWindow(object):
         self.verticalSlider = QtWidgets.QSlider(self.centralwidget)
         
         """usr code"""
-        
         self.verticalSlider.setMinimum(0)
         self.verticalSlider.setMaximum(100)
         self.verticalSlider.setValue(100)
@@ -48,28 +57,29 @@ class Ui_MainWindow(object):
         self.lineEdit.setFont(font)
         self.lineEdit.setObjectName("lineEdit")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar.setObjectName('statusbar')
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
         
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
-        def retranslateUi(self,MainWindow):
-            _translate = QtCore.QCoreApplication.translate
-            MainWindow.setWindowTitle(_translate("MainWindow","MainWindow"))
-            self.pushButton.setText(_translate("MainWindow","Toggle LED"))
-            self.lineEdit.setText(_translate("MainWindow","LED Brightness"))
-            """usr code"""
-            
-            self.pushButton.clicked.connect(ledToggle)
-            self.verticalSlider.valueChanged.connect(self.sliderMov)
+    def retranslateUi(self,MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow","MainWindow"))
+        self.pushButton.setText(_translate("MainWindow","Toggle LED"))
+        self.lineEdit.setText(_translate("MainWindow","LED Brightness"))
+        """usr code"""
+        self.pushButton.clicked.connect(ledToggle)
+        self.verticalSlider.valueChanged.connect(self.sliderMov)
         
-        def sliderMov(self):
-            value = self.verticalSlider.value()
-            print(value)
-            pwm.ChangeDutyCycle(value)
-            
-            '''usr code'''
-            
+    def sliderMov(self):
+        value = self.verticalSlider.value()
+        print(value)
+        pwm.ChangeDutyCycle(value)
+        '''usr code'''
+
+        
 import sys
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
