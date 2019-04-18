@@ -9,10 +9,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 '''User Code'''
-from PyQt5.QtWidgets import QMessegeBox
+from PyQt5.QtWidgets import QMessageBox
 def btn_clicked():
     print("Button Pressed")
-    QMessegeBox.information(MainWindow,'Welcome','PyQt5 + Raspberry PI')
+    QMessageBox.information(MainWindow,'Welcome','PyQt5 + Raspberry PI')
 '''User Code'''
 
 class Ui_MainWindow(object):
@@ -46,7 +46,7 @@ import sys
 app = QtWidgets.QApplication(sys.argv)
 MainWindow=QtWidgets.QMainWindow()
 ui=Ui_MainWindow()
-ui.setupUI(MainWindow)
+ui.setupUi(MainWindow)
 MainWindow.show()
 sys.exit(app.exec_())
 '''User Code'''
